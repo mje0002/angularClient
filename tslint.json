@@ -1,6 +1,3 @@
-/**
-	DEFAULT TSLINT FILE
-*/
 {
     "defaultSeverity": "error",
     "extends": [
