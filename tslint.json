@@ -12,6 +12,10 @@
 		"max-line-length": [false, 120]
 	},
     "rules": {
+		"ordered-imports": [
+			true,
+			{ "named-imports-order": "lowercase-last" }
+		],
 		"object-literal-sort-keys": false,
 		"semicolon": [true, "never"],
 		"quotemark": [true, "single", "jsx-double"],

@@ -4,12 +4,12 @@ const CleanWebpackPlugin   = require('clean-webpack-plugin')
 const HtmlWebpackPlugin    = require('html-webpack-plugin')
 const TSLintPlugin         = require('tslint-webpack-plugin')
 
-const helpers              = require('./helper');
+const helpers              = require('./helper')
+const path                 = require('path')
 const isDev                = process.env.NODE_ENV !== 'production'
 
-module.exports = []
-
 const clientConfig = {
+    context: __dirname,
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
@@ -17,14 +17,17 @@ const clientConfig = {
 		host: 'localhost',
 		port: 9000,
 		open: true,
-		historyApiFallback: true
-	},
+        historyApiFallback: true,
+        stats: 'minimal'
+    },
     entry: {
-        main: './src/client/main.ts'
+        main: './src/client/main.ts',
+        vendor: './src/client/vendor.ts',
+        polyfills: './src/client/polyfills.ts'
     },
     output: {
-        path: helpers.root('dist/public'),
-        publicPath: '/',
+        path: path.join(__dirname + '/dist/public'),
+        //publicPath: '/',
         filename: '[name].bundle.js',
         chunkFilename: '[id].chunk.js'
     },
@@ -61,7 +64,7 @@ const clientConfig = {
             files: ['./src/**/*.ts']
         }),
         new HtmlWebpackPlugin({
-            template: './src/client/index.html',
+            template: './src/client/index.ejs',
             title: 'Node Angular App'    
         })
     ]
@@ -103,3 +106,5 @@ const serverConfig = {
 			extensions: [".ts", ".tsx", ".js", ".json"]
 	}
 }
+
+module.exports = [clientConfig]
